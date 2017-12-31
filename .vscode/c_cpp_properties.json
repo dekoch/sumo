@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/mario/.arduino15/packages/arduino/hardware/avr/1.6.19/cores/arduino",
+                "/home/mario/.arduino15/packages/arduino/hardware/avr/1.6.19/libraries",
+                "/home/mario/Apps/arduino-1.8.1/hardware/arduino/avr/cores/arduino",
+                "/home/mario/Documents/Arduino/libraries",
+                "${workspaceRoot}"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "/home/mario/.arduino15/packages/arduino/hardware/avr/1.6.19/cores/arduino",
+                    "/home/mario/.arduino15/packages/arduino/hardware/avr/1.6.19/libraries",
+                    "/home/mario/Apps/arduino-1.8.1/hardware/arduino/avr/cores/arduino",
+                    "/home/mario/Documents/Arduino/libraries",
+                    "${workspaceRoot}"
+                ]
+            },
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 3
+}

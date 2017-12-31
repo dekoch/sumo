@@ -1,0 +1,123 @@
+
+#define VERSION 1.0
+#define BOARD_SUMO_1_1712
+#define BOARD_SUMO_OPT_1_0
+
+
+#include <EEPROM.h>
+#include <Wire.h>
+#include <VL53L0X.h> // https://github.com/pololu/vl53l0x-arduino
+
+#include "config.h"
+#include "boards.h"
+#include "util.h"
+#include "globals.h"
+#include "state.h"
+#include "hw_in.h"
+#include "hw_out.h"
+#include "background.h"
+#include "a_sumo.h"
+//#include "a_sumo_test.h"
+
+Settings sett;
+BoardState boardstate;
+HardwareInputs hw_in;
+HardwareOutputs hw_out;
+Background bg;
+Sumo sumo;
+
+
+bool boState = false;
+
+
+void setup()
+{
+  Serial.begin(115200);
+  Serial.println("");
+  Serial.println("");
+
+  boardstate.setup();
+  boardstate.SetState(State_Starting);
+
+  Wire.begin();
+  
+
+  sett.setup();
+
+  if (boLoadSettings)
+  {
+    boLoadSettings = false;
+
+    if (sett.load() == false)
+    {
+      while (true);
+    }
+  }
+
+  hw_out.setup();
+  hw_in.setup();
+  bg.setup();
+  sumo.setup();
+
+  timerCycle.Interval(2000);
+  timerCycle.Start();
+
+  boardstate.SetState(State_Ready);
+  boardstate.SetState(State_Loop);
+}
+
+
+void loop()
+{
+  timerCycle.Reset();
+
+
+  hw_in.loop();
+
+  bg.loop();
+
+  if (boState)
+  {
+    boardstate.loop();
+  }
+
+  sumo.loop();
+
+  hw_out.loop();
+  
+
+
+  if (boLoadSettings)
+  {
+    boLoadSettings = false;
+
+    sett.load();
+  }
+
+  if (boSaveSettings)
+  {
+    boSaveSettings = false;
+
+    sett.save();
+  }
+
+
+  if (boState == false)
+  {
+    ulTimeCycle = timerCycle.elapsedTime();
+
+    /*if (timerCycle.elapsed()) // 2ms
+      {
+      Serial.print("W: Cyc: ");
+      Serial.println(ulTimeCycle);
+      }*/
+  }
+
+  boState = !boState;
+
+  //delay(200);
+
+  digitalWrite(pinLED1, !digitalRead(pinLED1));
+}
+
+
