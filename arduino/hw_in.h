@@ -25,13 +25,11 @@ public:
     _timerVL53.Interval(0);
     _timerVL53.Start();
 
-    _scinLeft.ConfigIn(0, 1023);
-    _scinRight.ConfigIn(0, 1023);
+    _scinLeft.ConfigIn(settings.aLeft.intMin, settings.aLeft.intMax);
+    _scinRight.ConfigIn(settings.aRight.intMin, settings.aRight.intMax);
 
-    _scinLeft.ConfigOut(settings.aLeft.dblOffset, settings.aLeft.dblMin, settings.aLeft.dblMax);
-    //_scinFront.ConfigOut(settings.aFront.dblOffset, settings.aFront.dblMin, settings.aFront.dblMax);
-    _scinRight.ConfigOut(settings.aRight.dblOffset, settings.aRight.dblMin, settings.aRight.dblMax);
-    //_scinBack.ConfigOut(settings.aBack.dblOffset, settings.aBack.dblMin, settings.aBack.dblMax);
+    _scinLeft.ConfigOut(0.0, 100.0);
+    _scinRight.ConfigOut(0.0, 100.0);
   }
 
   void loop()
@@ -85,13 +83,13 @@ private:
 
   VL53L0X _vl53;
 
-  ScaleIn _scinLeft = ScaleIn();
-  ScaleIn _scinFront = ScaleIn();
-  ScaleIn _scinRight = ScaleIn();
-  ScaleIn _scinBack = ScaleIn();
+  ScaleIn _scinLeft = ScaleIn(false);
+  ScaleIn _scinFront = ScaleIn(false);
+  ScaleIn _scinRight = ScaleIn(false);
+  ScaleIn _scinBack = ScaleIn(false);
 
-  TimedAverage _avgLeft = TimedAverage(5, 100);
-  TimedAverage _avgRight = TimedAverage(5, 100);
+  TimedAverage _avgLeft = TimedAverage(3, 100);
+  TimedAverage _avgRight = TimedAverage(3, 100);
 
   Threshold _thresLeft = Threshold();
   Threshold _thresRight = Threshold();

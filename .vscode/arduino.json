@@ -1,5 +1,6 @@
 {
     "sketch": "sumo.ino",
-    "port": "/dev/ttyACM0",
-    "board": "arduino:avr:leonardo"
+    "port": "/dev/ttyUSB0",
+    "board": "arduino:avr:pro",
+    "configuration": "cpu=16MHzatmega328"
 }

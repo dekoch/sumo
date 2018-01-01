@@ -16,10 +16,8 @@ double dblFront;
 double dblRight;
 double dblBack;
 
-
 bool boLoadSettings = false;
 bool boSaveSettings = false;
-
 
 enum enumLine
 {
@@ -29,7 +27,6 @@ enum enumLine
   Line_RIGHT,
   Line_BACK
 } lineSensor = Line_NONE;
-
 
 enum enumMove
 {
@@ -45,7 +42,6 @@ enum enumMove
   TURNRIGHT
 } moveSumo = STOP;
 
-
 enum enumState
 {
   State_Undefined,
@@ -55,8 +51,5 @@ enum enumState
   State_Standbye
 } stateBoard = State_Undefined;
 
-
 Timer timerCycle = Timer(false, true);
 unsigned long ulTimeCycle = 0;
-
-
