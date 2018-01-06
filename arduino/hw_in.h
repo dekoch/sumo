@@ -66,7 +66,7 @@ public:
           intDistance = 9999;
         }
 
-        if (checkRange(intDistance, 0.0, 500.0) == false)
+        if (inRange(intDistance, 0.0, 500.0) == false)
         {
           intDistance = 9999;
         }

@@ -405,7 +405,7 @@ private:
 /*
   ScaleIn MyScaleIn = ScaleIn();
   MyScaleIn.ConfigIn(0, 1023);
-  MyScaleIn.ConfigOut(0.0, 0.0, 100.0);
+  MyScaleIn.ConfigOut(0.0, 100.0);
 
   double value = MyScaleIn.value(analogRead(A0));
 */
@@ -609,7 +609,7 @@ private:
   double _dblMax;
 };
 
-bool checkRange(double val, double minVal, double maxVal)
+bool inRange(double val, double minVal, double maxVal)
 {
   if (val < minVal)
   {
@@ -634,7 +634,6 @@ double mapd(double x, double in_min, double in_max, double out_min, double out_m
  * Sensors = 100..149
  * 
  */
-
 enum enumStates
 {
   State_ERROR,
@@ -717,7 +716,7 @@ public:
     {
       if (_stateArray[i].bySender != 0)
       {
-        if (_stateArray[i].byType == 0)
+        if (_stateArray[i].byType == State_ERROR)
         {
           return false;
         }
