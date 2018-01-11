@@ -22,9 +22,6 @@ public:
       boDistEnabled = false;
     }
 
-    _timerVL53.Interval(0);
-    _timerVL53.Start();
-
     _scinLeft.ConfigIn(settings.aLeft.intMin, settings.aLeft.intMax);
     _scinRight.ConfigIn(settings.aRight.intMin, settings.aRight.intMax);
 
@@ -34,23 +31,29 @@ public:
 
   void loop()
   {
-    //boDebugger = digitalRead(pinDebug);
+    boDebugger = digitalRead(pinDebug);
 
-    dblLeft = _scinLeft.value(analogRead(pinLineLeft)); // 300us
-    _avgLeft.Put(dblLeft);
+    if (boAnalogEnabled)
+    {
+      analogRead(pinLineLeft);                            // empty reading for accuracy
+      dblLeft = _scinLeft.value(analogRead(pinLineLeft)); // 300us
+
+      analogRead(pinLineRight); // empty reading for accuracy
+      dblRight = _scinRight.value(analogRead(pinLineRight));
+
+      _avgLeft.Put(dblLeft);
+      _avgRight.Put(dblRight);
+    }
 
     dblLeft = _avgLeft.value();
     //dblLeft = _thresLeft.value(dblLeft, 3.0);
-
-    dblRight = _scinRight.value(analogRead(pinLineRight));
-    _avgRight.Put(dblRight);
 
     dblRight = _avgRight.value();
     //dblRight = _thresRight.value(dblRight, 3.0);
 
     if (boDistEnabled)
     {
-      if (_timerVL53.elapsed())
+      if (_vl53.rangeAvailable())
       {
         if (_vl53.timeoutOccurred() == false)
         {
@@ -58,11 +61,12 @@ public:
 
           if (intDistance < 0)
           {
-            state.Put(State_ERROR, 100, 153, "LV");
+            state.Put(State_ERROR, 100, 531, "LV");
           }
         }
         else
         {
+          state.Put(State_ERROR, 100, 532, "LV");
           intDistance = 9999;
         }
 
@@ -79,8 +83,6 @@ public:
   }
 
 private:
-  Timer _timerVL53 = Timer();
-
   VL53L0X _vl53;
 
   ScaleIn _scinLeft = ScaleIn(false);

@@ -646,6 +646,7 @@ class State
 public:
   State()
   {
+    Clear();
   }
 
   void Clear()
@@ -654,6 +655,8 @@ public:
     {
       _stateArray[i].bySender = 0;
     }
+
+    _boError = false;
   }
 
   void Put(byte type, byte sender, int id, char *str)
@@ -683,6 +686,8 @@ public:
         if (_stateArray[i].byType == State_ERROR)
         {
           Serial.print("E\t");
+
+          _boError = true;
         }
         else if (_stateArray[i].byType == State_WARNING)
         {
@@ -712,22 +717,12 @@ public:
 
   bool noError()
   {
-    for (int i = 0; i < _cintArraySize; i += 1)
-    {
-      if (_stateArray[i].bySender != 0)
-      {
-        if (_stateArray[i].byType == State_ERROR)
-        {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    return !_boError;
   }
 
 private:
   const int _cintArraySize = 3;
+  bool _boError;
 
   struct struState
   {

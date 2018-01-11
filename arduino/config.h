@@ -29,22 +29,22 @@ public:
     settings.bySpeedMaxLeft = 50;
     settings.bySpeedMaxRight = 50;
 
-    settings.aLeft.intMin = 180;
-    settings.aLeft.intMax = 240;
+    settings.aLeft.intMin = 750;
+    settings.aLeft.intMax = 850;
 
     settings.aFront.intMin = 0;
-    settings.aFront.intMax = 100;
+    settings.aFront.intMax = 1023;
 
-    settings.aRight.intMin = 0;
-    settings.aRight.intMax = 100;
+    settings.aRight.intMin = 750;
+    settings.aRight.intMax = 850;
 
     settings.aBack.intMin = 0;
-    settings.aBack.intMax = 100;
+    settings.aBack.intMax = 1023;
   }
 
   bool load()
   {
-    Serial.println("load EE");
+    state.Put(State_INFO, 1, 1, "EE");
 
     int intConfig;
     int intEEConfig;
@@ -62,6 +62,8 @@ public:
 
     if (intConfig != intEEConfig)
     {
+      state.Put(State_ERROR, 1, 1, "EE");
+
       return false;
     }
 
@@ -74,7 +76,7 @@ public:
 
   bool save()
   {
-    Serial.println("save EE");
+    state.Put(State_INFO, 1, 2, "EE");
 
     int intConfig;
 
@@ -83,6 +85,8 @@ public:
 
     if (intConfig >= EEPROM.length())
     {
+      state.Put(State_ERROR, 1, 2, "EE");
+
       return false;
     }
 

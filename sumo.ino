@@ -5,12 +5,12 @@
 
 #include <EEPROM.h>
 #include <Wire.h>
-#include <VL53L0X.h> // https://github.com/pololu/vl53l0x-arduino
+#include <VL53L0X.h> // https://github.com/pololu/vl53l0x-arduino (changed a little bit)
 
-#include "arduino/config.h"
-#include "arduino/boards.h"
 #include "arduino/util.h"
 #include "arduino/globals.h"
+#include "arduino/config.h"
+#include "arduino/boards.h"
 #include "arduino/state.h"
 #include "arduino/hw_in.h"
 #include "arduino/hw_out.h"
@@ -56,7 +56,7 @@ void setup()
   bg.setup();
   sumo.setup();
 
-  timerCycle.Interval(2000);
+  timerCycle.Interval(5000);
   timerCycle.Start();
 
   boardstate.SetState(State_Ready);
@@ -95,12 +95,12 @@ void loop()
     sett.save();
   }
 
-  // cycle time monitoring
+  // cycletime monitoring
   if (boState == false)
   {
     ulTimeCycle = timerCycle.elapsedTime();
 
-    if (timerCycle.elapsed()) // 2ms
+    if (timerCycle.elapsed()) // 5ms
     {
       state.Put(State_WARNING, 1, 1, "Cyc");
     }

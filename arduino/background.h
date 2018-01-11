@@ -12,9 +12,10 @@ public:
   {
     boError = !state.noError();
 
-    // auto turn off StepUp
+    // StepUp control
     if (true == true)
     {
+      // auto turn off StepUp
       if (moveSumo == STOP && _timerStandby.enabled() == false)
       {
         _timerStandby.Reset();
@@ -34,22 +35,49 @@ public:
 
         boStepUpEnabled = false;
       }
+
+      if (boDebugger)
+      {
+        boStepUpEnabled = true;
+      }
+    }
+
+    // analog sensor control
+    if (true == false)
+    {
+      if (moveSumo != STOP)
+      {
+        boAnalogEnabled = true;
+      }
+      else
+      {
+        boAnalogEnabled = false;
+      }
     }
 
     // line detection
     if (true == true)
     {
-      if (dblLeft < dblRight)
+      lineSensor = Line_NONE;
+
+      if (dblLeft > 50.0 && dblRight > 50.0)
+      {
+        if (dblLeft > dblRight)
+        {
+          lineSensor = Line_LEFT;
+        }
+        else
+        {
+          lineSensor = Line_RIGHT;
+        }
+      }
+      else if (dblLeft > 50.0)
       {
         lineSensor = Line_LEFT;
       }
-      else if (dblLeft > dblRight)
+      else if (dblRight > 50.0)
       {
         lineSensor = Line_RIGHT;
-      }
-      else
-      {
-        lineSensor = Line_NONE;
       }
     }
 

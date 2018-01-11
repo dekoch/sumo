@@ -7,6 +7,7 @@ bool boError = false;
 unsigned int uintStep = 0;
 bool boStepUpEnabled = false;
 bool boDistEnabled = true;
+bool boAnalogEnabled = true;
 int intDistance = 9999;
 
 int intTest = 0;
